@@ -18,10 +18,16 @@ namespace pokemonMachine
         static Image charmander = pokemonMachine.Properties.Resources._char;
         static Image eevee = pokemonMachine.Properties.Resources.eevie;
         static Image squirtle = pokemonMachine.Properties.Resources.squirt;
+        static Image rat = pokemonMachine.Properties.Resources.rat;
+        static Image pidgey =pokemonMachine.Properties.Resources.pidgey;
+        static Image cat = pokemonMachine.Properties.Resources.cat;
+        static Image jiggly = pokemonMachine.Properties.Resources.jiggly;
+        static Image diglet = pokemonMachine.Properties.Resources.diglet;
+        static Image psyduck = pokemonMachine.Properties.Resources.psyduck;
         static Image pokeball = pokemonMachine.Properties.Resources.Pokéball;
         static Image hold_on = pokemonMachine.Properties.Resources.hold_on;
         static Image hold_off = pokemonMachine.Properties.Resources.hold_off;
-        Image[] reels =  { pikachu, bulbasaur, charmander, eevee, squirtle, pokeball };
+        Image[] reels =  { pikachu, bulbasaur, charmander, eevee, squirtle,rat,pidgey,cat,jiggly,diglet,psyduck, pokeball };
         int count;
         int leftReelPointer;
         int centreReelPointer;
@@ -43,30 +49,30 @@ namespace pokemonMachine
         private void tmr_reel1_Tick(object sender, EventArgs e)
         {
             leftReelPointer++;
-            if (leftReelPointer == 6) { leftReelPointer = 0; }
+            if (leftReelPointer == 12) { leftReelPointer = 0; }
             PB_left_centre.Image = reels[leftReelPointer];
-            PB_bottom_left.Image = reels[mod(leftReelPointer - 1, 6)];
-            PB_top_left.Image = reels[(leftReelPointer + 1) % 6];
+            PB_bottom_left.Image = reels[mod(leftReelPointer - 1, 12)];
+            PB_top_left.Image = reels[(leftReelPointer + 1) % 12];
 
         }
 
         private void tmr_reel2_Tick(object sender, EventArgs e)
         {
             centreReelPointer++;
-            if (centreReelPointer == 6) { centreReelPointer = 0; }
+            if (centreReelPointer == 12) { centreReelPointer = 0; }
             PB_middle_centre.Image = reels[centreReelPointer];
-            PB_bottom_centre.Image = reels[mod(centreReelPointer - 1, 6)];
-            PB_top_centre.Image = reels[(centreReelPointer + 1) % 6];
+            PB_bottom_centre.Image = reels[mod(centreReelPointer - 1,12)];
+            PB_top_centre.Image = reels[(centreReelPointer + 1) % 12];
 
         }
 
         private void tmr_reel3_Tick(object sender, EventArgs e)
         {
             rightReelPointer++;
-            if (rightReelPointer == 6) { rightReelPointer = 0; }
+            if (rightReelPointer == 12) { rightReelPointer = 0; }
             PB_right_centre.Image = reels[rightReelPointer];
-            PB_bottom_right.Image = reels[mod(rightReelPointer - 1, 6)];
-            PB_top_right.Image = reels[(rightReelPointer + 1) % 6];
+            PB_bottom_right.Image = reels[mod(rightReelPointer - 1, 12)];
+            PB_top_right.Image = reels[(rightReelPointer + 1) % 12];
 
         }
 
@@ -89,19 +95,19 @@ namespace pokemonMachine
         private void Form1_Load(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            leftReelPointer = rnd.Next(0, 5);
-            centreReelPointer = rnd.Next(0, 5);
-            rightReelPointer = rnd.Next(0, 5);
+            leftReelPointer = rnd.Next(0, 11);
+            centreReelPointer = rnd.Next(0, 11);
+            rightReelPointer = rnd.Next(0, 11);
             //set reels
             PB_left_centre.Image = reels[leftReelPointer];
             PB_middle_centre.Image = reels[centreReelPointer];
             PB_right_centre.Image = reels[rightReelPointer];
-            PB_bottom_left.Image = reels[mod(leftReelPointer - 1, 6)];
-            PB_bottom_centre.Image = reels[mod(centreReelPointer - 1, 6)];
-            PB_bottom_right.Image = reels[mod(rightReelPointer - 1, 6)];
-            PB_top_left.Image = reels[(leftReelPointer + 1) % 6];
-            PB_top_centre.Image = reels[(centreReelPointer + 1) % 6];
-            PB_top_right.Image = reels[(rightReelPointer + 1) % 6];
+            PB_bottom_left.Image = reels[mod(leftReelPointer - 1, 12)];
+            PB_bottom_centre.Image = reels[mod(centreReelPointer - 1, 12)];
+            PB_bottom_right.Image = reels[mod(rightReelPointer - 1, 12)];
+            PB_top_left.Image = reels[(leftReelPointer + 1) % 12];
+            PB_top_centre.Image = reels[(centreReelPointer + 1) % 12];
+            PB_top_right.Image = reels[(rightReelPointer + 1) % 12];
             tmr_master.Stop();
             tmr_reel1.Stop();
             tmr_reel2.Stop();
@@ -136,10 +142,10 @@ namespace pokemonMachine
         {
             if (nudges > 0)
             {
-                leftReelPointer = (leftReelPointer + 1) % 6;
+                leftReelPointer = (leftReelPointer + 1) % 12;
                 PB_left_centre.Image = reels[leftReelPointer];
-                PB_top_left.Image = reels[mod(leftReelPointer + 1, 6)];
-                PB_bottom_left.Image = reels[mod(leftReelPointer - 1, 6)];
+                PB_top_left.Image = reels[mod(leftReelPointer + 1, 12)];
+                PB_bottom_left.Image = reels[mod(leftReelPointer - 1,12)];
                 nudges--;
                 lbl_nudges.Text = nudges.ToString();
             }
@@ -149,10 +155,10 @@ namespace pokemonMachine
         {
             if (nudges > 0)
             {
-                centreReelPointer = (centreReelPointer + 1) % 6;
+                centreReelPointer = (centreReelPointer + 1) % 12;
                 PB_middle_centre.Image = reels[centreReelPointer];
-                PB_top_centre.Image = reels[mod(centreReelPointer + 1, 6)];
-                PB_bottom_centre.Image = reels[mod(centreReelPointer - 1, 6)];
+                PB_top_centre.Image = reels[mod(centreReelPointer + 1, 12)];
+                PB_bottom_centre.Image = reels[mod(centreReelPointer - 1,12)];
                 nudges--;
                 lbl_nudges.Text= nudges.ToString();
             }
@@ -162,10 +168,10 @@ namespace pokemonMachine
         {
             if (nudges > 0)
             {
-                rightReelPointer = (rightReelPointer + 1) % 6;
+                rightReelPointer = (rightReelPointer + 1) % 12;
                 PB_right_centre.Image = reels[rightReelPointer];
-                PB_top_right.Image = reels[mod(rightReelPointer + 1, 6)];
-                PB_bottom_right.Image = reels[mod(rightReelPointer - 1, 6)];
+                PB_top_right.Image = reels[mod(rightReelPointer + 1, 12)];
+                PB_bottom_right.Image = reels[mod(rightReelPointer - 1, 12)];
                 nudges--;
                 lbl_nudges.Text = nudges.ToString();
             }
