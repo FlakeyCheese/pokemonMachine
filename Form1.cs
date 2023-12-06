@@ -29,11 +29,12 @@ namespace pokemonMachine
         static Image hold_off = pokemonMachine.Properties.Resources.hold_off;
         Image[] reels =  { pikachu, bulbasaur, charmander, eevee, squirtle,rat,pidgey,cat,jiggly,diglet,psyduck, pokeball };
         int count;
-        int leftReelPointer;
-        int centreReelPointer;
-        int rightReelPointer;
+       static int leftReelPointer;
+       static int centreReelPointer;
+        static int rightReelPointer;
         int nudges = 0;
-        int credit = 20;       
+        int credit = 20;
+        int winnings = 0;
             public Form1()
         {
             InitializeComponent();
@@ -88,7 +89,10 @@ namespace pokemonMachine
                 tmr_reel3.Stop();
                 tmr_master.Stop();
                 count = 0;
+                winnings += checkWin();
+                lbl_winnings.Text = winnings.ToString();
             }
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -130,6 +134,7 @@ namespace pokemonMachine
                     nudges = nudges + rnd_nudge.Next(1, 4);
                     lbl_nudges.Text = nudges.ToString();
                 }
+                
                
 
             }
@@ -146,6 +151,7 @@ namespace pokemonMachine
                 PB_bottom_left.Image = reels[mod(leftReelPointer - 1,12)];
                 nudges--;
                 lbl_nudges.Text = nudges.ToString();
+                winnings += checkWin();
             }
         }
 
@@ -159,6 +165,7 @@ namespace pokemonMachine
                 PB_bottom_centre.Image = reels[mod(centreReelPointer - 1,12)];
                 nudges--;
                 lbl_nudges.Text= nudges.ToString();
+                winnings += checkWin();
             }
         }
 
@@ -172,7 +179,19 @@ namespace pokemonMachine
                 PB_bottom_right.Image = reels[mod(rightReelPointer - 1, 12)];
                 nudges--;
                 lbl_nudges.Text = nudges.ToString();
+                winnings += checkWin();
             }
+        }
+        public static int checkWin()
+        {
+            int winnings = 0;
+            if (leftReelPointer==11 && centreReelPointer==11 && rightReelPointer==11)
+            { winnings = 20; }
+            else if(leftReelPointer==centreReelPointer && leftReelPointer!=rightReelPointer)
+            { winnings=10; }
+            else if (leftReelPointer==11)
+            { winnings = 5; }
+            return winnings;
         }
 
         private void tmr_hold_Tick(object sender, EventArgs e)
@@ -196,6 +215,14 @@ namespace pokemonMachine
         private void hold_right_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            credit += winnings;
+            winnings = 0;
+            lbl_winnings.Text = winnings.ToString();
+            lbl_credit.Text = credit.ToString();
         }
     }
 }
