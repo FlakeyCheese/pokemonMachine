@@ -33,9 +33,8 @@ namespace pokemonMachine
         int centreReelPointer;
         int rightReelPointer;
         int nudges = 0;
-        int credit = 20;
-        bool hold =false;
-        public Form1()
+        int credit = 20;       
+            public Form1()
         {
             InitializeComponent();
         }
@@ -78,10 +77,10 @@ namespace pokemonMachine
 
         private void tmr_master_Tick(object sender, EventArgs e)
         {
-            tmr_reel1.Start();
+             { tmr_reel1.Start(); }
             count++;
-            if (count == 2) { tmr_reel2.Start(); }
-            if (count == 4) { tmr_reel3.Start(); }
+            if (count == 2 ) { tmr_reel2.Start(); }
+            if (count == 4 ) { tmr_reel3.Start(); }
             if (count == 20)
             {
                 tmr_reel1.Stop();
@@ -119,6 +118,9 @@ namespace pokemonMachine
         {
             if (credit > 0)
             {
+                nudges = 0;
+                lbl_nudges.Text = nudges.ToString();
+                
                 tmr_master.Start();
                 credit--;
                 lbl_credit.Text = credit.ToString();
@@ -128,11 +130,7 @@ namespace pokemonMachine
                     nudges = nudges + rnd_nudge.Next(1, 4);
                     lbl_nudges.Text = nudges.ToString();
                 }
-                if(rnd_nudge.Next(1,11)==10)
-                {
-                    hold = true;
-                    tmr_hold.Start();
-                }
+               
 
             }
 
@@ -179,21 +177,25 @@ namespace pokemonMachine
 
         private void tmr_hold_Tick(object sender, EventArgs e)
         {
-            if (hold)
-            { 
-                if (hold_left.Image==hold_on)
-                {
-                    hold_left.Image = hold_off;
-                    hold_centre.Image = hold_off;
-                    hold_right.Image = hold_off;                
-                }
-                else
-                {
-                    hold_left.Image=hold_on;
-                    hold_centre.Image = hold_on;
-                    hold_right.Image = hold_on;
-                }
-            }
+            
+            
+        }
+
+        private void hold_left_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void hold_centre_Click(object sender, EventArgs e)
+        {
+            
+            
+
+        }
+
+        private void hold_right_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
